@@ -8,10 +8,20 @@
 
 import Foundation
 
-//class WeatherAPIClient{
-//
-//    private init() {}
-//    static let shared = WeatherAPIClient()
+class WeatherAPIClient {
+    
+    private init() {}
+    static let shared = WeatherAPIClient()
+    
+    func getWeather(lat: String, long: String, completionHandler: @escaping (Result<[WeatherData], AppError>)-> Void){
+        
+        let URLString = "https://api.darksky.net/forecast/\(Secrets.key)/\(lat),\(long)"
+        guard let url = URL(string: URLString) else {completionHandler(.failure(AppError.badURL))
+            return 
+        }
+    }
+}
+
 //
 //    func getWeather(searchTerm: String, completionHandler: @escaping (Result<[Hit], Error>)-> Void){
 //
