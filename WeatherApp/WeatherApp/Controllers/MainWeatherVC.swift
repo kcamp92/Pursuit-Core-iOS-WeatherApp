@@ -13,8 +13,8 @@ class MainWeatherVC: UIViewController {
     lazy var weatherCollectionView: UICollectionView = {
         let cv = UICollectionView()
         cv.backgroundColor = .systemTeal
-       // cv.dataSource = self
-        //cv.delegate = self
+        cv.dataSource = self
+        cv.delegate = self
         return cv
     }()
     
@@ -43,6 +43,9 @@ class MainWeatherVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpForecastLabel()
+        setUpCollectionView()
+        setupTextfield()
+        setUpInstructionLabel()
 
         // Do any additional setup after loading the view.
     }
@@ -98,3 +101,16 @@ class MainWeatherVC: UIViewController {
 
 }
 //MARK: -Extensions
+
+extension MainWeatherVC: UICollectionViewDataSource, UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return weatherData.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        <#code#>
+    }
+}
+extension MainWeatherVC: UITextFieldDelegate {
+    
+}

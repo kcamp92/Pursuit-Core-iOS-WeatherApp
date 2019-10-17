@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 struct Weather: Codable {
     let daily: Daily
@@ -44,7 +45,44 @@ struct WeatherData: Codable {
     let sunriseTime: Int
     let sunsetTime: Int
     let windSpeed: Double
-    let precipProbability: Double    
+    let precipProbability: Double
+    
+    
+    func getSpecificTimeFromTime(time:Int) -> String {
+        let date = NSDate(timeIntervalSince1970: TimeInterval(time))
+        let dateFormatter = DateFormatter()
+        dateFormatter.timeStyle = DateFormatter.Style.medium //Set time style
+        dateFormatter.dateStyle = DateFormatter.Style.medium //Set date style
+        let testDate = dateFormatter.string(from: date as Date)
+        return testDate.components(separatedBy: " at")[1]
+    }
+    
+    func returnPictureBasedOnIcon(icon:String) -> UIImage {
+        switch icon {
+        case "rain":
+            return UIImage(named: "rain")!
+        case "cloudy":
+            return UIImage(named: "cloudy")!
+        case "partly-cloudy-night":
+            return UIImage(named: "pcloudyn")!
+        case "clear-day":
+            return UIImage(named: "clear")!
+        case "clear-night":
+            return UIImage(named:"clearn")!
+        case "partly-cloudy-day":
+            return UIImage(named:"pcloudy" )!
+        case "snow":
+            return UIImage(named: "snow")!
+        case "sleet":
+            return UIImage(named: "sleet")!
+        case "wind":
+            return UIImage(named: "wind")!
+        case "fog":
+            return UIImage(named:"fog")!
+        default:
+            return UIImage(named: "image")!
+        }
+    }
 }
 
 //"daily": {
