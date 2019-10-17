@@ -35,24 +35,44 @@ class MainWeatherVC: UIViewController {
         label.backgroundColor = .systemPink
         return label
     }()
-    var weatherData  = [Weather]() {
+    
+    var weatherData  = [WeatherData]() {
         didSet{
             weatherCollectionView.reloadData()
         }
     }
+    
+    private var searchWord: String? {
+        didSet{
+            weatherCollectionView.reloadData()
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpForecastLabel()
         setUpCollectionView()
         setupTextfield()
         setUpInstructionLabel()
+        loadData()
 
         // Do any additional setup after loading the view.
     }
     
     
-    
-    
+    private func loadData(){
+        WeatherAPIClient.shared.getWeather(lat: searchWord ?? "", long: searchWord ?? ""){
+        (result)in
+        DispatchQueue.main.async{
+            switch result {
+            case.success(let weatherFromOnline):
+                self.weatherData = weatherFromOnline
+            case.failure(let error):
+                print(error)
+            }
+        }
+    }
+}
     
     // MARK:- Constraint Set-Up
     
@@ -110,7 +130,14 @@ extension MainWeatherVC: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         <#code#>
     }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        <#code#>
+    }
 }
 extension MainWeatherVC: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        <#code#>
+    }
     
 }

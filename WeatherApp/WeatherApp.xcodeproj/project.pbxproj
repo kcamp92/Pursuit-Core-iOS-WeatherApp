@@ -93,6 +93,7 @@
 			children = (
 				0BEEAD862357CD2B007041B5 /* WeatherModel.swift */,
 				0BEEAD8C2357E42B007041B5 /* FavoritesModel.swift */,
+				0BDB05862358D5760032E0BC /* Weather.json */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -177,7 +178,6 @@
 				548CE067234D340700B5177D /* Assets.xcassets */,
 				548CE05F234D33B600B5177D /* Info.plist */,
 				0BDB05842358D5220032E0BC /* Secrets.swift */,
-				0BDB05862358D5760032E0BC /* Weather.json */,
 			);
 			path = WeatherApp;
 			sourceTree = "<group>";
