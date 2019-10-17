@@ -36,5 +36,5 @@ class PicturesAPIClient{
 //            }
 //        }
 //    }
-//}
+}
 

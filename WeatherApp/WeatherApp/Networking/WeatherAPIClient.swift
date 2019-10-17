@@ -8,12 +8,12 @@
 
 import Foundation
 
-//class PicturesAPIClient{
+//class WeatherAPIClient{
 //
 //    private init() {}
-//    static let shared = PicturesAPIClient()
+//    static let shared = WeatherAPIClient()
 //
-//    func getImages(searchTerm: String, completionHandler: @escaping (Result<[Hit], Error>)-> Void){
+//    func getWeather(searchTerm: String, completionHandler: @escaping (Result<[Hit], Error>)-> Void){
 //
 //        let urlString = "https://pixabay.com/api/?key=13914646-74defb60eef565463557ca2e6&q=\(searchTerm.replacingOccurrences(of: "", with: "+"))"
 //
