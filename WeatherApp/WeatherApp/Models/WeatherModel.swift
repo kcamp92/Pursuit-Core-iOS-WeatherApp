@@ -26,11 +26,9 @@ struct WeatherData: Codable {
     let sunriseTime: Int
     let sunsetTime: Int
     let windSpeed: Double
-    let precipProbability: Double
-    
+    let precipProbability: Double    
 }
 
-Additional information about the weather including the high, low, sunrise, sunset, windspeed and precipitation
 //"daily": {
 //"summary": "No precipitation throughout the week, with high temperatures rising to 74°F on Tuesday.",
 //"icon": "clear-day",

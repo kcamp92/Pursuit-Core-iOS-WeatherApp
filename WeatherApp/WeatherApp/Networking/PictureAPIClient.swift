@@ -1,5 +1,5 @@
 //
-//  WeatherAPIClient.swift
+//  PictureAPIClient.swift
 //  WeatherApp
 //
 //  Created by Krystal Campbell on 10/16/19.
@@ -8,8 +8,8 @@
 
 import Foundation
 
-//class PicturesAPIClient{
-//
+class PicturesAPIClient{
+    
 //    private init() {}
 //    static let shared = PicturesAPIClient()
 //
@@ -37,4 +37,4 @@ import Foundation
 //        }
 //    }
 //}
-//
+
