@@ -1,20 +1,20 @@
 //
-//  ViewController.swift
+//  MainWeatherVC.swift
 //  WeatherApp
 //
-//  Created by David Rifkin on 10/8/19.
+//  Created by Krystal Campbell on 10/17/19.
 //  Copyright © 2019 David Rifkin. All rights reserved.
 //
 
 import UIKit
 
-class ViewController: UIViewController {
+class MainWeatherVC: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
         // Do any additional setup after loading the view.
     }
-
+    
 
 }
-

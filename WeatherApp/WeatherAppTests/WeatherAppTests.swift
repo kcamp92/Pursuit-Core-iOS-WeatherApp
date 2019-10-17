@@ -10,14 +10,28 @@ import XCTest
 
 
 class WeatherAppTests: XCTestCase {
-
-    override func setUp() {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+    
+    private func getWeatherData() -> Data {
+        guard let pathToData = Bundle.main.path(forResource: "Weather", ofType: "json")
+            else {
+                fatalError("Weather.json file not found")
+        }
+        let url = URL(fileURLWithPath: pathToData)
+        do {
+            let data = try Data(contentsOf: url)
+            return data
+        } catch let jsonError {
+            fatalError("could not find file: \(jsonError)")
+        }
     }
 
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+  
+    func testWeatherDataLoad() {
+        let weather = Weather.getWeatherData()
+        XCTAssert(weather.count > 0, "donde es data?")
+            
     }
+
 
     func testExample() {
         // This is an example of a functional test case.

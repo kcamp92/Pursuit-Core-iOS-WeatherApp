@@ -11,7 +11,25 @@ import Foundation
 struct Weather: Codable {
     let daily: Daily
     
+enum JSONError: Error {
+    case decodingError(Error)
+       }
+       
+    static func getWeatherData() -> [WeatherData] {
+        guard let fileName = Bundle.main.path(forResource: "Weather", ofType: "json")
+            else {fatalError()}
+        let fileURL = URL(fileURLWithPath: fileName)
+        do {
+            let data = try Data(contentsOf: fileURL)
+            let weather = try
+                JSONDecoder().decode(Weather.self, from: data)
+            return weather.daily.data
+        } catch {
+            fatalError("\(error)")
+        }
+    }
 }
+
 
 struct Daily: Codable {
     let data: [WeatherData]
