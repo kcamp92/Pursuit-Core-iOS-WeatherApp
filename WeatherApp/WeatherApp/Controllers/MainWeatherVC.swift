@@ -8,11 +8,18 @@
 
 import UIKit
 
+private let cellIdentifier = "WeatherCell"
 class MainWeatherVC: UIViewController {
     
+    
+// MARK: - Properties
+    
     lazy var weatherCollectionView: UICollectionView = {
-        let cv = UICollectionView()
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        let cv = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
         cv.backgroundColor = .systemTeal
+        cv.register(WeatherCell.self, forCellWithReuseIdentifier: cellIdentifier)
         cv.dataSource = self
         cv.delegate = self
         return cv
@@ -26,12 +33,18 @@ class MainWeatherVC: UIViewController {
     
     lazy var forecastLabel: UILabel = {
         let label = UILabel()
-        label.backgroundColor = .systemPink
+        label.textAlignment = .center
+        label.font = UIFont(name: "Marker Felt", size: 30.0)
+        label.textColor = #colorLiteral(red: 0.2196078449, green: 0.007843137719, blue: 0.8549019694, alpha: 1)
+        label.backgroundColor = .blue
         return label
     }()
     
     lazy var instructionLabel: UILabel = {
         let label = UILabel()
+        label.textAlignment = .center
+        label.font = UIFont(name: "Marker Felt", size: 30.0)
+        label.textColor = #colorLiteral(red: 0.2196078449, green: 0.007843137719, blue: 0.8549019694, alpha: 1)
         label.backgroundColor = .systemPink
         return label
     }()
@@ -44,7 +57,7 @@ class MainWeatherVC: UIViewController {
     
     private var searchWord: String? {
         didSet{
-            weatherCollectionView.reloadData()
+         //   ZipCodeHelper
         }
     }
     
@@ -89,7 +102,7 @@ class MainWeatherVC: UIViewController {
         view.addSubview(weatherCollectionView)
         weatherCollectionView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-        weatherCollectionView.topAnchor.constraint(equalTo: view.topAnchor),
+        weatherCollectionView.topAnchor.constraint(equalTo: forecastLabel.bottomAnchor),
         weatherCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
         weatherCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor)])
     
@@ -98,7 +111,7 @@ class MainWeatherVC: UIViewController {
         view.addSubview(zipcodeTextField)
         zipcodeTextField.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            zipcodeTextField.topAnchor.constraint(equalTo: view.topAnchor),
+            zipcodeTextField.topAnchor.constraint(equalTo: weatherCollectionView.bottomAnchor),
         zipcodeTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor),
         zipcodeTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor)])
         
@@ -107,18 +120,13 @@ class MainWeatherVC: UIViewController {
         view.addSubview(instructionLabel)
         instructionLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-        instructionLabel.topAnchor.constraint(equalTo: view.topAnchor),
+        instructionLabel.topAnchor.constraint(equalTo: zipcodeTextField.bottomAnchor),
         instructionLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor),
         instructionLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor),
         instructionLabel.bottomAnchor.constraint(equalTo: view.bottomAnchor)])
            
            
-       }
-    
-    
-    
-    
-
+    }
 }
 //MARK: -Extensions
 
@@ -128,16 +136,39 @@ extension MainWeatherVC: UICollectionViewDataSource, UICollectionViewDelegate {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        <#code#>
+        let weather = weatherData[indexPath.item]
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "WeatherCell", for: indexPath) as! WeatherCell
+        cell.dateLabel.text = weather.time.description
+       // cell.iconImage.image = weather.icon(UIImage.(named: "")
+        cell.highLabel.text = weather.temperatureHigh.description
+        cell.lowLabel.text = weather.temperatureLow.description
+        return cell
     }
     
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        <#code#>
-    }
-}
-extension MainWeatherVC: UITextFieldDelegate {
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        <#code#>
-    }
+//    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+//        let detailWVC = DetailViewController()
+//
+        /*let detailVC = AnimeDetailVC()
+            let selectedAnime = animeList[indexPath.row]
+            detailVC.anime = selectedAnime
+            self.navigationController?.pushViewController(detailVC, animated: true)
+        }*/
+        
+        /*/
+         func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as! RecipesCell
+             let recipe = recipes[indexPath.row]
+             cell.configureCell(with: recipes, collectionView: recipesCollectionView, index: indexPath.row)
+             return cell
+             
+         }
+        */
     
 }
+
+//extension MainWeatherVC: UITextFieldDelegate {
+//    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+//        <#code#>
+//    }
+//
+//}

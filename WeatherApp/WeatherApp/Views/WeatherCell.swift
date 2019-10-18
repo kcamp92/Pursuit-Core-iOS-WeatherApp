@@ -11,24 +11,39 @@ import UIKit
 class WeatherCell: UICollectionViewCell {
     
     lazy var iconImage: UIImageView = {
-        let image = UIImageView()
-        return image
+        let iv = UIImageView()
+        iv.clipsToBounds = true
+        iv.contentMode = .scaleAspectFill
+        iv.layer.borderWidth = 4
+        iv.layer.borderColor = UIColor.black.cgColor
+        return iv
       }()
       
+    
+    
     lazy var dateLabel: UILabel = {
         let label = UILabel()
+        label.textAlignment = .center
+        label.font = UIFont(name: "Marker Felt", size: 30.0)
+        label.textColor = #colorLiteral(red: 0.2196078449, green: 0.007843137719, blue: 0.8549019694, alpha: 1)
         label.backgroundColor = .systemGreen
         return label
         }()
     
     lazy var highLabel: UILabel = {
         let label = UILabel()
+        label.textAlignment = .center
+        label.font = UIFont(name: "Marker Felt", size: 30.0)
+        label.textColor = #colorLiteral(red: 0.2196078449, green: 0.007843137719, blue: 0.8549019694, alpha: 1)
         label.backgroundColor = .systemGreen
         return label
            }()
     
     lazy var lowLabel: UILabel = {
         let label = UILabel()
+        label.textAlignment = .center
+        label.font = UIFont(name: "Marker Felt", size: 30.0)
+        label.textColor = #colorLiteral(red: 0.2196078449, green: 0.007843137719, blue: 0.8549019694, alpha: 1)
         label.backgroundColor = .systemGreen
         return label
            }()

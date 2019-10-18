@@ -22,7 +22,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let favWVC = FavoriteWeatherVC()
         
         mainWVC.tabBarItem = UITabBarItem(tabBarSystemItem: .search, tag: 0)
-        favWVC.tabBarItem = UITabBarItem(tabBarSystemItem: .search, tag: 1)
+        favWVC.tabBarItem = UITabBarItem(tabBarSystemItem: .favorites, tag: 1)
         let navController = UINavigationController(rootViewController:mainWVC)
         let tabBarController = UITabBarController()
         tabBarController.viewControllers = [navController, favWVC]
