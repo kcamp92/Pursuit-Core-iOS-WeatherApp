@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		0B4082B72359F82300F5B912 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B4082B62359F82300F5B912 /* DetailViewController.swift */; };
 		0B4082B8235A139400F5B912 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 548CE053234D33B500B5177D /* SceneDelegate.swift */; };
+		0BBA2AE2235DFCBC00B25798 /* FavoritesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BBA2AE1235DFCBC00B25798 /* FavoritesCell.swift */; };
 		0BDB054F2358D0EC0032E0BC /* FavoritesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BEEAD8C2357E42B007041B5 /* FavoritesModel.swift */; };
 		0BDB05812358D49B0032E0BC /* MainWeatherVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BDB05802358D49B0032E0BC /* MainWeatherVC.swift */; };
 		0BDB05832358D4B10032E0BC /* FavoriteWeatherVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BDB05822358D4B10032E0BC /* FavoriteWeatherVC.swift */; };
@@ -47,6 +48,7 @@
 
 /* Begin PBXFileReference section */
 		0B4082B62359F82300F5B912 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		0BBA2AE1235DFCBC00B25798 /* FavoritesCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesCell.swift; sourceTree = "<group>"; };
 		0BDB05802358D49B0032E0BC /* MainWeatherVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainWeatherVC.swift; sourceTree = "<group>"; };
 		0BDB05822358D4B10032E0BC /* FavoriteWeatherVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteWeatherVC.swift; sourceTree = "<group>"; };
 		0BDB05842358D5220032E0BC /* Secrets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Secrets.swift; sourceTree = "<group>"; };
@@ -105,6 +107,7 @@
 			isa = PBXGroup;
 			children = (
 				0BDB058A235917930032E0BC /* WeatherCell.swift */,
+				0BBA2AE1235DFCBC00B25798 /* FavoritesCell.swift */,
 				548CE053234D33B500B5177D /* SceneDelegate.swift */,
 			);
 			path = Views;
@@ -305,6 +308,7 @@
 				0BDB05852358D5220032E0BC /* Secrets.swift in Sources */,
 				0BEEAD892357E3AB007041B5 /* PersistenceHelper.swift in Sources */,
 				0BEEADA02357E4AC007041B5 /* NetworkHelper.swift in Sources */,
+				0BBA2AE2235DFCBC00B25798 /* FavoritesCell.swift in Sources */,
 				0BDB05812358D49B0032E0BC /* MainWeatherVC.swift in Sources */,
 				548CE052234D33B500B5177D /* AppDelegate.swift in Sources */,
 				0BEEADA42357E4F4007041B5 /* WeatherAPIClient.swift in Sources */,
