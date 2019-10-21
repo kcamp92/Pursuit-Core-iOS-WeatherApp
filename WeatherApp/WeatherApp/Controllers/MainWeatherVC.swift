@@ -130,10 +130,21 @@ class MainWeatherVC: UIViewController {
         instructionLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
         instructionLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
         instructionLabel.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)])
-           
-           
     }
-}
+        
+        var zipCode = "" {
+            didSet{
+                UserDefaultsWrapper.manager.store(zipCode: zipCode)
+            }
+        }
+        
+        private func setInitialValuesFromUserDefaults(){
+            if let storedZipCode = UserDefaults.standard.value(forKey: "zipCode") as? String {
+                zipCode = storedZipCode
+            }
+        }
+    }
+
 //MARK: -Extensions
 
 extension MainWeatherVC: UICollectionViewDataSource, UICollectionViewDelegate {
