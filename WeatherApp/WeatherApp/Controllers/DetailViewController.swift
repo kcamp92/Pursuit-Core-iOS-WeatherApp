@@ -9,22 +9,49 @@
 import UIKit
 
 class DetailViewController: UIViewController {
+    
+    lazy var cityForecastDateLabel: UILabel = {
+          let label = UILabel()
+          label.textAlignment = .center
+          label.font = UIFont(name: "Marker Felt", size: 30.0)
+          label.textColor = #colorLiteral(red: 0.2196078449, green: 0.007843137719, blue: 0.8549019694, alpha: 1)
+          label.backgroundColor = .systemGreen
+          return label
+          }()
+      
+    
+    lazy var cityImage: UIImageView = {
+        let iv = UIImageView()
+        iv.clipsToBounds = true
+        iv.contentMode = .scaleAspectFill
+        iv.layer.borderWidth = 4
+        iv.layer.borderColor = UIColor.blue.cgColor
+        return iv
+      }()
+    
+    lazy var descriptionTextView: UITextView = {
+        let label = UITextView()
+        label.textAlignment = .center
+        label.font = UIFont(name: "Marker Felt", size: 30.0)
+        label.textColor = #colorLiteral(red: 0.2196078449, green: 0.007843137719, blue: 0.8549019694, alpha: 1)
+        label.backgroundColor = .systemGreen
+        return label
+           }()
+    
+//    lazy var saveButton: UIBarButtonItem = {
+//        let button = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.save, target: self, action: <#T##Selector?#>)
+//
+//
+//    }()
+//
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
+       // navigationItem.rightBarButtonItem = saveButton
 
         // Do any additional setup after loading the view.
     }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
+  
 
 }

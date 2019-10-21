@@ -8,20 +8,20 @@
 
 import Foundation
 
-
-
-/*struct ImagePersistenceManager {
-    private init (){}
-static let manager = ImagePersistenceManager()
-private let persistenceHelper = PersistenceHelper<FavoritedPhotos>(fileName: "image.plist")
+struct ImagePersistenceManager {
     
-    func saveImage(image: FavoritedPhotos) throws {
+    private init (){}
+    
+static let manager = ImagePersistenceManager()
+private let persistenceHelper = PersistenceHelper<FavoritedPictures>(fileName: "image.plist")
+    
+func saveImage(image: FavoritedPictures) throws {
         try persistenceHelper.save(newElement: image)
     }
     
-    func getImage() throws -> [FavoritedPhotos] {
+func getImage() throws -> [FavoritedPictures] {
         return try persistenceHelper.getObjects()
     }
 }
  
-*/
+

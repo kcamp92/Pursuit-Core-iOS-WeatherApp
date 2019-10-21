@@ -7,3 +7,11 @@
 //
 
 import Foundation
+
+struct FavoritedPictures: Codable {
+    let hits: [Hit]
+}
+
+struct Hit: Codable {
+    let largeImageURL: String?
+}

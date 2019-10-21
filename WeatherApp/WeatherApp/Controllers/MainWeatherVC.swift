@@ -9,6 +9,7 @@
 import UIKit
 
 private let cellIdentifier = "WeatherCell"
+
 class MainWeatherVC: UIViewController {
     
     
@@ -55,6 +56,8 @@ class MainWeatherVC: UIViewController {
         }
     }
     
+    private let cellSpacing = UIScreen.main.bounds.size.width * 0.09
+    
     private var searchWord: String? {
         didSet{
          //   ZipCodeHelper
@@ -86,25 +89,28 @@ class MainWeatherVC: UIViewController {
         }
     }
 }
-    
+   
     // MARK:- Constraint Set-Up
     
     private func setUpForecastLabel(){
         view.addSubview(forecastLabel)
         forecastLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-        forecastLabel.topAnchor.constraint(equalTo: view.topAnchor),
-        forecastLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-        forecastLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor)])
+            forecastLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            forecastLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            forecastLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)])
+//        forecastLabel.bottomAnchor.constraint(equalTo: weatherCollectionView.safeAreaLayoutGuide.topAnchor)
     }
+
     
     private func setUpCollectionView(){
         view.addSubview(weatherCollectionView)
         weatherCollectionView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
         weatherCollectionView.topAnchor.constraint(equalTo: forecastLabel.bottomAnchor),
-        weatherCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-        weatherCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor)])
+        weatherCollectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+        weatherCollectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)])
+     //   weatherCollectionView.bottomAnchor.constraint(equalTo: zipcodeTextField.safeAreaLayoutGuide.topAnchor)
     
     }
     private func setupTextfield(){
@@ -112,8 +118,8 @@ class MainWeatherVC: UIViewController {
         zipcodeTextField.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             zipcodeTextField.topAnchor.constraint(equalTo: weatherCollectionView.bottomAnchor),
-        zipcodeTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-        zipcodeTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor)])
+            zipcodeTextField.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            zipcodeTextField.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)])
         
     }
     private func setUpInstructionLabel(){
@@ -121,9 +127,9 @@ class MainWeatherVC: UIViewController {
         instructionLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
         instructionLabel.topAnchor.constraint(equalTo: zipcodeTextField.bottomAnchor),
-        instructionLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-        instructionLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-        instructionLabel.bottomAnchor.constraint(equalTo: view.bottomAnchor)])
+        instructionLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+        instructionLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+        instructionLabel.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)])
            
            
     }
@@ -145,6 +151,30 @@ extension MainWeatherVC: UICollectionViewDataSource, UICollectionViewDelegate {
         return cell
     }
     
+    
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+           let numCells: CGFloat = 0.8
+           let numSpaces: CGFloat = numCells + 2.9
+           
+           let screenWidth = UIScreen.main.bounds.width
+           let screenHeight = UIScreen.main.bounds.height
+           
+           return CGSize(width: (screenWidth - (cellSpacing * numSpaces)) / numCells, height: screenHeight * 0.7)
+       }
+       
+       func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, section: Int) -> UIEdgeInsets {
+           return UIEdgeInsets(top: 0, left: cellSpacing, bottom: 0, right: cellSpacing)
+       }
+       
+       func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+           return cellSpacing
+       }
+       
+       func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+           return cellSpacing
+       }
+       
 //    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 //        let detailWVC = DetailViewController()
 //

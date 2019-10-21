@@ -9,22 +9,28 @@
 import UIKit
 
 class FavoriteWeatherVC: UIViewController {
+    
+    lazy var favoritesTableView: UITableView = {
+           let tv = UITableView()
+           tv.backgroundColor = .white
+         //  tv.dataSource = self
+          // tv.delegate = self
+           return tv
+       }()
 
+    private var favorites = [FavoritedPictures]() {
+         didSet {
+             favoritesTableView.reloadData()
+         }
+     }
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
     }
     
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
+  
 
 }
