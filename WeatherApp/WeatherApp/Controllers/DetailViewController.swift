@@ -10,6 +10,8 @@ import UIKit
 
 class DetailViewController: UIViewController {
     
+    var pictures: FavoritedPictures!
+    
     lazy var cityForecastDateLabel: UILabel = {
           let label = UILabel()
           label.textAlignment = .center
@@ -38,17 +40,27 @@ class DetailViewController: UIViewController {
         return label
            }()
     
-//    lazy var saveButton: UIBarButtonItem = {
-//        let button = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.save, target: self, action: <#T##Selector?#>)
-//
-//
-//    }()
-//
+    lazy var saveButton: UIBarButtonItem = {
+        let button = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.save, target: self, action: #selector(saveButtonPressed))
+        return button
+
+    }()
     
+    @objc func saveButtonPressed(){
+        let savedImage = FavoritedPictures(hits: pictures!.hits)
+        DispatchQueue.global(qos: .utility).async {
+            try?
+                ImagePersistenceManager.manager.saveImage(image: savedImage)
+            DispatchQueue.main.async {
+                self.navigationController?.popViewController(animated: true)
+            }
+        }
+    }
+ 
 
     override func viewDidLoad() {
         super.viewDidLoad()
-       // navigationItem.rightBarButtonItem = saveButton
+    navigationItem.rightBarButtonItem = saveButton
 
         // Do any additional setup after loading the view.
     }

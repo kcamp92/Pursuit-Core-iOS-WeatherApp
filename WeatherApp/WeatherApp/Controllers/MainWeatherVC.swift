@@ -66,6 +66,7 @@ class MainWeatherVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setInitialValuesFromUserDefaults()
         setUpForecastLabel()
         setUpCollectionView()
         setupTextfield()
