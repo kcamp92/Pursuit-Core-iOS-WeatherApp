@@ -62,7 +62,6 @@ class DetailViewController: UIViewController {
         super.viewDidLoad()
     navigationItem.rightBarButtonItem = saveButton
 
-        // Do any additional setup after loading the view.
     }
   
 

@@ -13,8 +13,8 @@ class FavoriteWeatherVC: UIViewController {
     lazy var favoritesTableView: UITableView = {
            let tv = UITableView()
            tv.backgroundColor = .white
-         //  tv.dataSource = self
-          // tv.delegate = self
+           tv.dataSource = self
+           tv.delegate = self
            return tv
        }()
 

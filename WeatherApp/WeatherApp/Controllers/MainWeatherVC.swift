@@ -37,7 +37,7 @@ class MainWeatherVC: UIViewController {
         label.textAlignment = .center
         label.font = UIFont(name: "Marker Felt", size: 30.0)
         label.textColor = #colorLiteral(red: 0.2196078449, green: 0.007843137719, blue: 0.8549019694, alpha: 1)
-        label.backgroundColor = .blue
+        label.backgroundColor = #colorLiteral(red: 0.5843137503, green: 0.8235294223, blue: 0.4196078479, alpha: 1)
         return label
     }()
     
@@ -66,6 +66,7 @@ class MainWeatherVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        addSubViews()
         setInitialValuesFromUserDefaults()
         setUpForecastLabel()
         setUpCollectionView()
@@ -94,45 +95,62 @@ class MainWeatherVC: UIViewController {
     // MARK:- Constraint Set-Up
     
     private func setUpForecastLabel(){
-        view.addSubview(forecastLabel)
+      
         forecastLabel.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            forecastLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            forecastLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            forecastLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)])
-//        forecastLabel.bottomAnchor.constraint(equalTo: weatherCollectionView.safeAreaLayoutGuide.topAnchor)
+        forecastLabel.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 50).isActive = true
+        forecastLabel.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor).isActive = true
+        forecastLabel.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor).isActive = true
+        forecastLabel.heightAnchor.constraint(equalToConstant: 50).isActive = true
     }
-
     
     private func setUpCollectionView(){
-        view.addSubview(weatherCollectionView)
+        
         weatherCollectionView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-        weatherCollectionView.topAnchor.constraint(equalTo: forecastLabel.bottomAnchor),
-        weatherCollectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-        weatherCollectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)])
-     //   weatherCollectionView.bottomAnchor.constraint(equalTo: zipcodeTextField.safeAreaLayoutGuide.topAnchor)
+        weatherCollectionView.topAnchor.constraint(equalTo: forecastLabel.bottomAnchor).isActive = true
+        weatherCollectionView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 20).isActive = true
+        weatherCollectionView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -20).isActive = true
+        weatherCollectionView.heightAnchor.constraint(equalToConstant: 350).isActive = true
+    }
     
-    }
     private func setupTextfield(){
-        view.addSubview(zipcodeTextField)
+        
         zipcodeTextField.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            zipcodeTextField.topAnchor.constraint(equalTo: weatherCollectionView.bottomAnchor),
-            zipcodeTextField.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            zipcodeTextField.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)])
+       
+        zipcodeTextField.topAnchor.constraint(equalTo: weatherCollectionView.bottomAnchor, constant: 30).isActive = true
+        zipcodeTextField.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor).isActive = true
+        zipcodeTextField.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor).isActive = true
         
     }
+    
+    
+    /*  private   func createPickerViewConstraints() {
+            
+              settingsPickerView.translatesAutoresizingMaskIntoConstraints = false
+     
+              settingsPickerView.topAnchor.constraint(equalTo: bestSellerCollectionView.bottomAnchor,constant: 30).isActive = true
+          settingsPickerView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor).isActive = true
+           settingsPickerView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor).isActive = true
+          settingsPickerView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor).isActive = true
+              
+          }
+      */
     private func setUpInstructionLabel(){
-        view.addSubview(instructionLabel)
+       
         instructionLabel.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-        instructionLabel.topAnchor.constraint(equalTo: zipcodeTextField.bottomAnchor),
-        instructionLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-        instructionLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-        instructionLabel.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)])
+        
+        instructionLabel.topAnchor.constraint(equalTo: zipcodeTextField.bottomAnchor,constant: 30).isActive = true
+        instructionLabel.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor).isActive = true
+        instructionLabel.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor).isActive = true
+        instructionLabel.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor).isActive = true
     }
         
+    
+    func addSubViews(){
+        view.addSubview(forecastLabel)
+        view.addSubview(weatherCollectionView)
+        view.addSubview(zipcodeTextField)
+        view.addSubview(instructionLabel)
+    }
         var zipCode = "" {
             didSet{
                 UserDefaultsWrapper.manager.store(zipCode: zipCode)
