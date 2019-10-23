@@ -32,6 +32,7 @@ class MainWeatherVC: UIViewController, UITextFieldDelegate {
     lazy var zipcodeTextField: UITextField = {
         let tf = UITextField()
         tf.backgroundColor = .systemGray
+        tf.delegate = self
         return tf
     }()
     
@@ -66,7 +67,7 @@ class MainWeatherVC: UIViewController, UITextFieldDelegate {
         addSubViews()
         setInitialValuesFromUserDefaults()
         setUpConstrains()
-        loadData()
+        //loadData()
     }
     
     // MARK: - Private Methods
@@ -188,6 +189,19 @@ class MainWeatherVC: UIViewController, UITextFieldDelegate {
 }
 
 
+//private   func checkUserDefaults() {
+//       if UserDefaultsWrapper.shared.getZipCode() != nil {
+//
+//           textString = UserDefaultsWrapper.shared.getZipCode()!
+//
+//           if textString != "" {
+//               zipCodeHelper()
+//           }
+//           weatherTextField.text = UserDefaultsWrapper.shared.getZipCode()
+//       }
+//   }
+
+
 //MARK: - Extensions
 
 extension MainWeatherVC: UICollectionViewDataSource, UICollectionViewDelegate {
@@ -197,15 +211,15 @@ extension MainWeatherVC: UICollectionViewDataSource, UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let weather = weatherData[indexPath.item]
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "WeatherCell", for: indexPath) as! WeatherCell
-        cell.dateLabel.text = weather.time.description
+        let cell = weatherCollectionView.dequeueReusableCell(withReuseIdentifier: "WeatherCell", for: indexPath) as! WeatherCell
+        cell.dateLabel.text = weather.getSpecificTimeFromTime(time: weather.time)
         // cell.iconImage.image = weather.icon(UIImage.(named: "")
         cell.highLabel.text = weather.temperatureHigh.description
         cell.lowLabel.text = weather.temperatureLow.description
         return cell
     }
     
-    
+ 
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let numCells: CGFloat = 0.8
