@@ -10,21 +10,24 @@ import UIKit
 
 private let cellIdentifier = "WeatherCell"
 
-class MainWeatherVC: UIViewController {
+class MainWeatherVC: UIViewController, UITextFieldDelegate {
     
     
-// MARK: - Properties
+    // MARK: - Properties
     
     lazy var weatherCollectionView: UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
+        var layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout.init()
+        let cv = UICollectionView(frame: UIScreen.main.bounds, collectionViewLayout: layout)
+        layout.itemSize = CGSize(width: 250, height: 300)
         layout.scrollDirection = .horizontal
-        let cv = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
-        cv.backgroundColor = .systemTeal
+        cv.backgroundColor = .clear
+        layout.sectionInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 0)
         cv.register(WeatherCell.self, forCellWithReuseIdentifier: cellIdentifier)
         cv.dataSource = self
         cv.delegate = self
         return cv
     }()
+    
     
     lazy var zipcodeTextField: UITextField = {
         let tf = UITextField()
@@ -56,80 +59,77 @@ class MainWeatherVC: UIViewController {
         }
     }
     
+    // MARK: - Lifecycle
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = .white
+        addSubViews()
+        setInitialValuesFromUserDefaults()
+        setUpConstrains()
+        loadData()
+    }
+    
+    // MARK: - Private Methods
+    
     private let cellSpacing = UIScreen.main.bounds.size.width * 0.09
     
-    private var searchWord: String? {
-        didSet{
-         //   ZipCodeHelper
+    var searchString: String = "" {
+        didSet {
+            
+            loadData()
         }
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        addSubViews()
-        setInitialValuesFromUserDefaults()
-        setUpForecastLabel()
-        setUpCollectionView()
-        setupTextfield()
-        setUpInstructionLabel()
-        loadData()
-
-    }
-    
-    
     private func loadData(){
-        WeatherAPIClient.shared.getWeather(lat: searchWord ?? "", long: searchWord ?? ""){
-        (result)in
-        DispatchQueue.main.async{
-            switch result {
-            case.success(let weatherFromOnline):
-                self.weatherData = weatherFromOnline
-            case.failure(let error):
-                print(error)
+        WeatherAPIClient.shared.getWeather(lat: searchString ?? "", long: searchString ?? ""){
+            (result) in
+            DispatchQueue.main.async{
+                switch result {
+                case.success(let weatherFromOnline):
+                    self.weatherData = weatherFromOnline
+                case.failure(let error):
+                    print(error)
+                }
             }
         }
     }
-}
-   
-    // MARK:- Constraint Set-Up
     
-    private func setUpForecastLabel(){
-      
+    // MARK:- Constraints Set-Up
+    
+    private func setUpConstrains(){
+        
         forecastLabel.translatesAutoresizingMaskIntoConstraints = false
-        forecastLabel.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 50).isActive = true
-        forecastLabel.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor).isActive = true
-        forecastLabel.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor).isActive = true
-        forecastLabel.heightAnchor.constraint(equalToConstant: 50).isActive = true
-    }
-    
-    private func setUpCollectionView(){
+        forecastLabel.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 30).isActive = true
+        forecastLabel.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 50).isActive = true
+        forecastLabel.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -50).isActive = true
+        forecastLabel.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        
         
         weatherCollectionView.translatesAutoresizingMaskIntoConstraints = false
         weatherCollectionView.topAnchor.constraint(equalTo: forecastLabel.bottomAnchor).isActive = true
         weatherCollectionView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 20).isActive = true
         weatherCollectionView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -20).isActive = true
-        weatherCollectionView.heightAnchor.constraint(equalToConstant: 350).isActive = true
-    }
-    
-    private func setupTextfield(){
+        weatherCollectionView.heightAnchor.constraint(equalToConstant: 250).isActive = true
+        
+        
         
         zipcodeTextField.translatesAutoresizingMaskIntoConstraints = false
-       
+        
         zipcodeTextField.topAnchor.constraint(equalTo: weatherCollectionView.bottomAnchor, constant: 30).isActive = true
-        zipcodeTextField.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor).isActive = true
-        zipcodeTextField.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor).isActive = true
-    }
-    
-    private func setUpInstructionLabel(){
-       
+        zipcodeTextField.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 50).isActive = true
+        zipcodeTextField.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -50).isActive = true
+        zipcodeTextField.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        
+        
         instructionLabel.translatesAutoresizingMaskIntoConstraints = false
         
         instructionLabel.topAnchor.constraint(equalTo: zipcodeTextField.bottomAnchor,constant: 30).isActive = true
         instructionLabel.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 30).isActive = true
         instructionLabel.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -30).isActive = true
         instructionLabel.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor).isActive = true
+        instructionLabel.heightAnchor.constraint(equalToConstant: 50).isActive = true
     }
-        
+    
     
     func addSubViews(){
         view.addSubview(forecastLabel)
@@ -137,20 +137,58 @@ class MainWeatherVC: UIViewController {
         view.addSubview(zipcodeTextField)
         view.addSubview(instructionLabel)
     }
-        var zipCode = "" {
-            didSet{
-                UserDefaultsWrapper.manager.store(zipCode: zipCode)
-            }
+    
+    //MARK: - User Defaults
+    
+    var zipCode = "" {
+        didSet{
+            UserDefaultsWrapper.manager.store(zipCode: zipCode)
         }
+    }
+    
+    var townName = "" {
+        didSet {
+            forecastLabel.text = "Weather Forecast for \(self.townName)"
+        }
+    }
+    private func setInitialValuesFromUserDefaults(){
+        if let storedZipCode = UserDefaults.standard.value(forKey: "zipCode") as? String {
+            zipCode = storedZipCode
+        }
+        zipcodeTextField.text = UserDefaultsWrapper.manager.getZipCode()
+    }
+    
+    
+    //MARK: - TextField Methods
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if let text = textField.text {
+            searchString = text
+        }
+        zipCodeHelper()
         
-        private func setInitialValuesFromUserDefaults(){
-            if let storedZipCode = UserDefaults.standard.value(forKey: "zipCode") as? String {
-                zipCode = storedZipCode
+        return true
+    }
+    
+    private func zipCodeHelper (){
+        ZipCodeHelper.getLatLong(fromZipCode: searchString){
+            (results) in
+            switch results {
+            case .success(let lat, let long, let name):
+                UserDefaultsWrapper.manager.store(zipCode: self.searchString)
+                self.searchString = "\(lat),\(long)"
+                self.townName = name
+            case .failure(_):
+                UserDefaultsWrapper.manager.store(zipCode: "")
+                
+                
             }
         }
     }
+}
 
-//MARK: -Extensions
+
+//MARK: - Extensions
 
 extension MainWeatherVC: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -161,7 +199,7 @@ extension MainWeatherVC: UICollectionViewDataSource, UICollectionViewDelegate {
         let weather = weatherData[indexPath.item]
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "WeatherCell", for: indexPath) as! WeatherCell
         cell.dateLabel.text = weather.time.description
-       // cell.iconImage.image = weather.icon(UIImage.(named: "")
+        // cell.iconImage.image = weather.icon(UIImage.(named: "")
         cell.highLabel.text = weather.temperatureHigh.description
         cell.lowLabel.text = weather.temperatureLow.description
         return cell
@@ -170,54 +208,50 @@ extension MainWeatherVC: UICollectionViewDataSource, UICollectionViewDelegate {
     
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-           let numCells: CGFloat = 0.8
-           let numSpaces: CGFloat = numCells + 2.9
-           
-           let screenWidth = UIScreen.main.bounds.width
-           let screenHeight = UIScreen.main.bounds.height
-           
-           return CGSize(width: (screenWidth - (cellSpacing * numSpaces)) / numCells, height: screenHeight * 0.7)
-       }
-       
-       func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, section: Int) -> UIEdgeInsets {
-           return UIEdgeInsets(top: 0, left: cellSpacing, bottom: 0, right: cellSpacing)
-       }
-       
-       func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-           return cellSpacing
-       }
-       
-       func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-           return cellSpacing
-       }
-       
+        let numCells: CGFloat = 0.8
+        let numSpaces: CGFloat = numCells + 2.9
+        
+        let screenWidth = UIScreen.main.bounds.width
+        let screenHeight = UIScreen.main.bounds.height
+        
+        return CGSize(width: (screenWidth - (cellSpacing * numSpaces)) / numCells, height: screenHeight * 0.7)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 0, left: cellSpacing, bottom: 0, right: cellSpacing)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return cellSpacing
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return cellSpacing
+    }
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let detailWVC = DetailViewController()
         let selectedWeather = weatherData[indexPath.row]
         
         self.navigationController?.pushViewController(detailWVC, animated: true)
-
+        
         /*let detailVC = AnimeDetailVC()
-            let selectedAnime = animeList[indexPath.row]
-            detailVC.anime = selectedAnime
-            self.navigationController?.pushViewController(detailVC, animated: true)
-        }*/
+         let selectedAnime = animeList[indexPath.row]
+         detailVC.anime = selectedAnime
+         self.navigationController?.pushViewController(detailVC, animated: true)
+         }*/
         
         /*/
          func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as! RecipesCell
-             let recipe = recipes[indexPath.row]
-             cell.configureCell(with: recipes, collectionView: recipesCollectionView, index: indexPath.row)
-             return cell
-             
+         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as! RecipesCell
+         let recipe = recipes[indexPath.row]
+         cell.configureCell(with: recipes, collectionView: recipesCollectionView, index: indexPath.row)
+         return cell
+         
          }
-        */
+         */
+        
+    }
+    
     
 }
-
-//extension MainWeatherVC: UITextFieldDelegate {
-//    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-//        <#code#>
-//    }
-//
-//}

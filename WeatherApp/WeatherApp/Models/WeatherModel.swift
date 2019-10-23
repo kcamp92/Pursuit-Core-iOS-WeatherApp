@@ -85,21 +85,3 @@ struct WeatherData: Codable {
     }
 }
 
-
-class UserDefaultsWrapper {
-    
-    static let manager = UserDefaultsWrapper()
-    
-    func store(zipCode: String){
-        UserDefaults.standard.set(zipCode, forKey: zipCodeKey)
-    }
-    
-    func getZipCode() -> String? {
-        return UserDefaults.standard.value(forKey: zipCodeKey) as? String
-    }
-    
-    private init() {}
-       
-       private let zipCodeKey = "zipCode"
-     
-}

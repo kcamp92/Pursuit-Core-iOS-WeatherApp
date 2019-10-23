@@ -10,6 +10,7 @@ import XCTest
 
 
 class WeatherAppTests: XCTestCase {
+    @testable import WeatherApp
     
     private func getWeatherData() -> Data {
         guard let pathToData = Bundle.main.path(forResource: "Weather", ofType: "json")
