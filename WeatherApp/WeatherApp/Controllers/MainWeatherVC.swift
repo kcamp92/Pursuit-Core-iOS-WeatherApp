@@ -82,7 +82,7 @@ class MainWeatherVC: UIViewController, UITextFieldDelegate {
     }
     
     private func loadData(){
-        WeatherAPIClient.shared.getWeather(lat: searchString ?? "", long: searchString ?? ""){
+        WeatherAPIClient.shared.getWeather(latLong: searchString ?? ""){
             (result) in
             DispatchQueue.main.async{
                 switch result {

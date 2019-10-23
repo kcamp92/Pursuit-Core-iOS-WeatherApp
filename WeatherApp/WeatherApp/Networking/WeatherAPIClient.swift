@@ -13,9 +13,9 @@ class WeatherAPIClient {
     private init() {}
     static let shared = WeatherAPIClient()
     
-    func getWeather(lat: String, long: String, completionHandler: @escaping (Result<[WeatherData], AppError>)-> Void){
+    func getWeather(latLong: String,completionHandler: @escaping (Result<[WeatherData], AppError>)-> Void){
         
-        let URLString = "https://api.darksky.net/forecast/\(Secrets.key)/\(lat),\(long)"
+        let URLString = "https://api.darksky.net/forecast/\(Secrets.key)/\(latLong)"
         guard let url = URL(string: URLString) else {completionHandler(.failure(AppError.badURL))
             return 
         }
