@@ -74,7 +74,6 @@ class MainWeatherVC: UIViewController {
         setUpInstructionLabel()
         loadData()
 
-        // Do any additional setup after loading the view.
     }
     
     
@@ -119,28 +118,15 @@ class MainWeatherVC: UIViewController {
         zipcodeTextField.topAnchor.constraint(equalTo: weatherCollectionView.bottomAnchor, constant: 30).isActive = true
         zipcodeTextField.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor).isActive = true
         zipcodeTextField.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor).isActive = true
-        
     }
     
-    
-    /*  private   func createPickerViewConstraints() {
-            
-              settingsPickerView.translatesAutoresizingMaskIntoConstraints = false
-     
-              settingsPickerView.topAnchor.constraint(equalTo: bestSellerCollectionView.bottomAnchor,constant: 30).isActive = true
-          settingsPickerView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor).isActive = true
-           settingsPickerView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor).isActive = true
-          settingsPickerView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor).isActive = true
-              
-          }
-      */
     private func setUpInstructionLabel(){
        
         instructionLabel.translatesAutoresizingMaskIntoConstraints = false
         
         instructionLabel.topAnchor.constraint(equalTo: zipcodeTextField.bottomAnchor,constant: 30).isActive = true
-        instructionLabel.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor).isActive = true
-        instructionLabel.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor).isActive = true
+        instructionLabel.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 30).isActive = true
+        instructionLabel.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -30).isActive = true
         instructionLabel.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor).isActive = true
     }
         
@@ -205,9 +191,12 @@ extension MainWeatherVC: UICollectionViewDataSource, UICollectionViewDelegate {
            return cellSpacing
        }
        
-//    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        let detailWVC = DetailViewController()
-//
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let detailWVC = DetailViewController()
+        let selectedWeather = weatherData[indexPath.row]
+        
+        self.navigationController?.pushViewController(detailWVC, animated: true)
+
         /*let detailVC = AnimeDetailVC()
             let selectedAnime = animeList[indexPath.row]
             detailVC.anime = selectedAnime
