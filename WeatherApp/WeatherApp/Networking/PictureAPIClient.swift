@@ -13,7 +13,7 @@ class PicturesAPIClient{
     private init() {}
     static let shared = PicturesAPIClient()
 
-    func getWeather(searchTerm: String, completionHandler: @escaping (Result<[WeatherData], Error>)-> Void){
+    func getPictures(searchTerm: String, completionHandler: @escaping (Result<[Hit], Error>)-> Void){
 
         let urlString = "https://pixabay.com/api/?key=13914646-74defb60eef565463557ca2e6&q=\(searchTerm.replacingOccurrences(of: "", with: "+"))"
 
@@ -28,8 +28,8 @@ class PicturesAPIClient{
                 completionHandler(.failure(error))
             case .success(let data):
                 do {
-                    let weatherDecoded = try JSONDecoder().decode([WeatherData].self, from: data)
-                    completionHandler(.success(weatherDecoded))
+                    let picturesDecoded = try JSONDecoder().decode(FavoritedPictures.self, from: data)
+                    completionHandler(.success(picturesDecoded.hits))
                 } catch {
                     completionHandler(.failure(AppError.couldNotParseJSON(rawError:error)))
                 }
@@ -37,4 +37,3 @@ class PicturesAPIClient{
         }
     }
 }
-

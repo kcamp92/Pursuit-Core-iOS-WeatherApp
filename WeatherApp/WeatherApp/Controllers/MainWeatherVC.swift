@@ -20,7 +20,7 @@ class MainWeatherVC: UIViewController, UITextFieldDelegate {
         let cv = UICollectionView(frame: UIScreen.main.bounds, collectionViewLayout: layout)
         layout.itemSize = CGSize(width: 250, height: 300)
         layout.scrollDirection = .horizontal
-        cv.backgroundColor = .clear
+        cv.backgroundColor = .blue
         layout.sectionInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 0)
         cv.register(WeatherCell.self, forCellWithReuseIdentifier: cellIdentifier)
         cv.dataSource = self
@@ -48,9 +48,10 @@ class MainWeatherVC: UIViewController, UITextFieldDelegate {
     lazy var instructionLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
-        label.font = UIFont(name: "Marker Felt", size: 30.0)
+        label.font = UIFont(name: "Marker Felt", size: 25.0)
         label.textColor = #colorLiteral(red: 0.2196078449, green: 0.007843137719, blue: 0.8549019694, alpha: 1)
-        label.backgroundColor = .systemPink
+       // label.backgroundColor = .systemPink
+        label.text = "Enter a Zip Code"
         return label
     }()
     
@@ -82,7 +83,7 @@ class MainWeatherVC: UIViewController, UITextFieldDelegate {
     }
     
     private func loadData(){
-        WeatherAPIClient.shared.getWeather(latLong: searchString ?? ""){
+        WeatherAPIClient.shared.getWeather(latLong: searchString){
             (result) in
             DispatchQueue.main.async{
                 switch result {
@@ -100,26 +101,27 @@ class MainWeatherVC: UIViewController, UITextFieldDelegate {
     private func setUpConstrains(){
         
         forecastLabel.translatesAutoresizingMaskIntoConstraints = false
-        forecastLabel.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 30).isActive = true
-        forecastLabel.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 50).isActive = true
-        forecastLabel.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -50).isActive = true
-        forecastLabel.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        forecastLabel.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant:15).isActive = true
+        forecastLabel.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 40).isActive = true
+        forecastLabel.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -40).isActive = true
+        forecastLabel.heightAnchor.constraint(equalToConstant: 35).isActive = true
+      // forecastLabel.bottomAnchor.constraint(equalTo: weatherCollectionView.topAnchor, constant: 20)
         
         
         weatherCollectionView.translatesAutoresizingMaskIntoConstraints = false
-        weatherCollectionView.topAnchor.constraint(equalTo: forecastLabel.bottomAnchor).isActive = true
-        weatherCollectionView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 20).isActive = true
-        weatherCollectionView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -20).isActive = true
-        weatherCollectionView.heightAnchor.constraint(equalToConstant: 250).isActive = true
+        weatherCollectionView.topAnchor.constraint(equalTo: forecastLabel.bottomAnchor, constant: 30).isActive = true
+        weatherCollectionView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 15).isActive = true
+        weatherCollectionView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -15).isActive = true
+        weatherCollectionView.heightAnchor.constraint(equalToConstant: 100).isActive = true
         
         
         
         zipcodeTextField.translatesAutoresizingMaskIntoConstraints = false
         
         zipcodeTextField.topAnchor.constraint(equalTo: weatherCollectionView.bottomAnchor, constant: 30).isActive = true
-        zipcodeTextField.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 50).isActive = true
-        zipcodeTextField.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -50).isActive = true
-        zipcodeTextField.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        zipcodeTextField.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 70).isActive = true
+        zipcodeTextField.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -70).isActive = true
+        zipcodeTextField.heightAnchor.constraint(equalToConstant: 35).isActive = true
         
         
         instructionLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -127,8 +129,8 @@ class MainWeatherVC: UIViewController, UITextFieldDelegate {
         instructionLabel.topAnchor.constraint(equalTo: zipcodeTextField.bottomAnchor,constant: 30).isActive = true
         instructionLabel.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 30).isActive = true
         instructionLabel.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -30).isActive = true
-        instructionLabel.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor).isActive = true
-        instructionLabel.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        instructionLabel.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -10).isActive = true
+        instructionLabel.heightAnchor.constraint(equalToConstant: 30).isActive = true
     }
     
     
@@ -189,22 +191,11 @@ class MainWeatherVC: UIViewController, UITextFieldDelegate {
 }
 
 
-//private   func checkUserDefaults() {
-//       if UserDefaultsWrapper.shared.getZipCode() != nil {
-//
-//           textString = UserDefaultsWrapper.shared.getZipCode()!
-//
-//           if textString != "" {
-//               zipCodeHelper()
-//           }
-//           weatherTextField.text = UserDefaultsWrapper.shared.getZipCode()
-//       }
-//   }
 
 
 //MARK: - Extensions
 
-extension MainWeatherVC: UICollectionViewDataSource, UICollectionViewDelegate {
+extension MainWeatherVC: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return weatherData.count
     }
@@ -216,10 +207,9 @@ extension MainWeatherVC: UICollectionViewDataSource, UICollectionViewDelegate {
         // cell.iconImage.image = weather.icon(UIImage.(named: "")
         cell.highLabel.text = weather.temperatureHigh.description
         cell.lowLabel.text = weather.temperatureLow.description
+        cell.iconImage.image = weather.returnPictureBasedOnIcon(icon: weather.icon)
         return cell
     }
-    
- 
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let numCells: CGFloat = 0.8
@@ -246,25 +236,8 @@ extension MainWeatherVC: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let detailWVC = DetailViewController()
         let selectedWeather = weatherData[indexPath.row]
-        
+        detailWVC.weatherDeets = selectedWeather
         self.navigationController?.pushViewController(detailWVC, animated: true)
-        
-        /*let detailVC = AnimeDetailVC()
-         let selectedAnime = animeList[indexPath.row]
-         detailVC.anime = selectedAnime
-         self.navigationController?.pushViewController(detailVC, animated: true)
-         }*/
-        
-        /*/
-         func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as! RecipesCell
-         let recipe = recipes[indexPath.row]
-         cell.configureCell(with: recipes, collectionView: recipesCollectionView, index: indexPath.row)
-         return cell
-         
-         }
-         */
-        
     }
     
     
