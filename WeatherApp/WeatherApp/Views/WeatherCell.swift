@@ -19,12 +19,10 @@ class WeatherCell: UICollectionViewCell {
         return iv
       }()
       
-    
-    
     lazy var dateLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
-        label.font = UIFont(name: "Marker Felt", size: 30.0)
+        label.font = UIFont(name: "Marker Felt", size: 20.0)
         label.textColor = #colorLiteral(red: 0.2196078449, green: 0.007843137719, blue: 0.8549019694, alpha: 1)
         label.backgroundColor = .systemGreen
         return label
@@ -47,7 +45,10 @@ class WeatherCell: UICollectionViewCell {
         label.backgroundColor = .systemGreen
         return label
            }()
-    
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+                       }
 
     override init(frame: CGRect) {
         super.init(frame:frame)
@@ -62,19 +63,21 @@ class WeatherCell: UICollectionViewCell {
     private func setupDateLabel(){
     contentView.addSubview(dateLabel)
     dateLabel.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-    dateLabel.topAnchor.constraint(equalTo: contentView.topAnchor),
-    dateLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-    dateLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor)])
+    
+    dateLabel.topAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
+    dateLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor).isActive = true
+    dateLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor).isActive = true
+    dateLabel.heightAnchor.constraint(equalToConstant: 200).isActive = true
        }
     
     private func setupIconImage(){
         contentView.addSubview(iconImage)
         iconImage.translatesAutoresizingMaskIntoConstraints = false
-            NSLayoutConstraint.activate([
-        iconImage.topAnchor.constraint(equalTo: contentView.topAnchor),
-        iconImage.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-        iconImage.trailingAnchor.constraint(equalTo: contentView.trailingAnchor)])
+        
+        iconImage.topAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
+        iconImage.leadingAnchor.constraint(equalTo: contentView.leadingAnchor).isActive = true
+        iconImage.trailingAnchor.constraint(equalTo: contentView.trailingAnchor).isActive = true
+        iconImage.heightAnchor.constraint(equalToConstant: 200).isActive = true
            }
     
     
@@ -97,8 +100,5 @@ class WeatherCell: UICollectionViewCell {
        }
     
     
-required init?(coder: NSCoder) {
-    fatalError("init(coder:) has not been implemented")
-                   }
     }
 

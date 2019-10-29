@@ -75,18 +75,3 @@ extension FavoriteWeatherVC: UITableViewDataSource, UITableViewDelegate {
       }
     
 }
-/*
-
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        var favoritedDetails = storyboard?.instantiateViewController(withIdentifier: "FavoriteDetailViewController") as! FavoriteDetailViewController
-        
-        favoritedDetails.favoriteDeets = favoritedPictures[indexPath.row]
-        navigationController?.pushViewController(favoritedDetails, animated: true)
-        
-    }
-   
-}
-
-*/

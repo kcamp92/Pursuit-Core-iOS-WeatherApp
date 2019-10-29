@@ -25,8 +25,8 @@ class WeatherAPIClient {
             completionHandler(.failure(error))
         case .success(let data):
             do {
-        let weatherDecoded = try JSONDecoder().decode([WeatherData].self, from: data)
-                completionHandler(.success(weatherDecoded))
+        let weatherDecoded = try JSONDecoder().decode(Weather.self, from: data)
+                completionHandler(.success(weatherDecoded.daily.data))
             } catch {
         completionHandler(.failure(AppError.couldNotParseJSON(rawError:error)))
                         }

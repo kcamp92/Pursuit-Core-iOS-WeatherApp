@@ -39,7 +39,7 @@ class MainWeatherVC: UIViewController, UITextFieldDelegate {
     lazy var forecastLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
-        label.font = UIFont(name: "Marker Felt", size: 30.0)
+        label.font = UIFont(name: "Marker Felt", size: 20.0)
         label.textColor = #colorLiteral(red: 0.2196078449, green: 0.007843137719, blue: 0.8549019694, alpha: 1)
         label.backgroundColor = #colorLiteral(red: 0.5843137503, green: 0.8235294223, blue: 0.4196078479, alpha: 1)
         return label
@@ -218,7 +218,7 @@ extension MainWeatherVC: UICollectionViewDataSource, UICollectionViewDelegate, U
         let screenWidth = UIScreen.main.bounds.width
         let screenHeight = UIScreen.main.bounds.height
         
-        return CGSize(width: (screenWidth - (cellSpacing * numSpaces)) / numCells, height: screenHeight * 0.7)
+        return CGSize(width: (screenWidth - (cellSpacing * numSpaces)) / numCells, height: screenHeight * 0.3)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, section: Int) -> UIEdgeInsets {
@@ -237,7 +237,9 @@ extension MainWeatherVC: UICollectionViewDataSource, UICollectionViewDelegate, U
         let detailWVC = DetailViewController()
         let selectedWeather = weatherData[indexPath.row]
         detailWVC.weatherDeets = selectedWeather
+        detailWVC.cityName = townName
         self.navigationController?.pushViewController(detailWVC, animated: true)
+        
     }
     
     

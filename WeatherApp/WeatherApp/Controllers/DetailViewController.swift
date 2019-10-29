@@ -12,8 +12,7 @@ class DetailViewController: UIViewController {
     
     var pictures = [Hit](){
         didSet {
-           // setImage()
-            
+           
         }
     }
     
@@ -96,7 +95,7 @@ class DetailViewController: UIViewController {
         view.addSubview(descriptionTextView)
     }
       
-    
+   
     private func loadData() {
            PicturesAPIClient.shared.getPictures(searchTerm: cityName!){
                (results) in
@@ -106,10 +105,27 @@ class DetailViewController: UIViewController {
                        print(error)
                    case .success(let data):
                     self.pictures = data
-                   }
-               }
-           }
-       }
+               
+                    ImageHelper.shared.getImage(urlStr: self.pictures.first?.largeImageURL ?? "") { (result) in
+                        DispatchQueue.main.async {
+                            switch result {
+                            case .failure(let error):
+                                print(error)
+                            case .success(let image):
+                                self.cityImage.image = image
+                            }
+                        }
+                    }
+                }
+                    
+            }
+                    
+                }
+            }
+        
+           
+       
+    
   //MARK: -Constraints Functions
  private func setUpConstraints() {
          
