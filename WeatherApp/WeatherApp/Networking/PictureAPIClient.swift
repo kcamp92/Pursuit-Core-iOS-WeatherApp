@@ -28,7 +28,7 @@ class PicturesAPIClient{
                 completionHandler(.failure(error))
             case .success(let data):
                 do {
-                    let picturesDecoded = try JSONDecoder().decode(FavoritedPictures.self, from: data)
+                    let picturesDecoded = try JSONDecoder().decode(CityPictures.self, from: data)
                     completionHandler(.success(picturesDecoded.hits))
                 } catch {
                     completionHandler(.failure(AppError.couldNotParseJSON(rawError:error)))
