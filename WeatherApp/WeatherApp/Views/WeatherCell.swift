@@ -22,9 +22,9 @@ class WeatherCell: UICollectionViewCell {
     lazy var dateLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
-        label.font = UIFont(name: "Marker Felt", size: 20.0)
-        label.textColor = #colorLiteral(red: 0.2196078449, green: 0.007843137719, blue: 0.8549019694, alpha: 1)
-        label.backgroundColor = .systemGreen
+        label.font = UIFont(name: "Marker Felt", size: 30.0)
+        label.textColor = .black
+        //label.backgroundColor = .clear
         return label
         }()
     
@@ -32,8 +32,8 @@ class WeatherCell: UICollectionViewCell {
         let label = UILabel()
         label.textAlignment = .center
         label.font = UIFont(name: "Marker Felt", size: 30.0)
-        label.textColor = #colorLiteral(red: 0.2196078449, green: 0.007843137719, blue: 0.8549019694, alpha: 1)
-        label.backgroundColor = .systemGreen
+        label.textColor = .black
+       // label.backgroundColor = .clear
         return label
            }()
     
@@ -41,8 +41,8 @@ class WeatherCell: UICollectionViewCell {
         let label = UILabel()
         label.textAlignment = .center
         label.font = UIFont(name: "Marker Felt", size: 30.0)
-        label.textColor = #colorLiteral(red: 0.2196078449, green: 0.007843137719, blue: 0.8549019694, alpha: 1)
-        label.backgroundColor = .systemGreen
+        label.textColor = .black
+      //  label.backgroundColor = .systemGreen
         return label
            }()
 
@@ -64,20 +64,22 @@ class WeatherCell: UICollectionViewCell {
     contentView.addSubview(dateLabel)
     dateLabel.translatesAutoresizingMaskIntoConstraints = false
     
-    dateLabel.topAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
+    dateLabel.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
     dateLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor).isActive = true
     dateLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor).isActive = true
-    dateLabel.heightAnchor.constraint(equalToConstant: 200).isActive = true
+    dateLabel.heightAnchor.constraint(equalToConstant: 50).isActive = true
        }
     
     private func setupIconImage(){
         contentView.addSubview(iconImage)
         iconImage.translatesAutoresizingMaskIntoConstraints = false
         
-        iconImage.topAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
-        iconImage.leadingAnchor.constraint(equalTo: contentView.leadingAnchor).isActive = true
-        iconImage.trailingAnchor.constraint(equalTo: contentView.trailingAnchor).isActive = true
-        iconImage.heightAnchor.constraint(equalToConstant: 200).isActive = true
+        iconImage.topAnchor.constraint(equalTo:dateLabel.bottomAnchor).isActive = true
+       // iconImage.leadingAnchor.constraint(equalTo: contentView.leadingAnchor).isActive = true
+       // iconImage.trailingAnchor.constraint(equalTo: contentView.trailingAnchor).isActive = true
+        iconImage.heightAnchor.constraint(equalToConstant: 100).isActive = true
+        iconImage.widthAnchor.constraint(equalToConstant: 100).isActive = true
+        iconImage.centerXAnchor.constraint(equalTo: dateLabel.centerXAnchor).isActive = true
            }
     
     
@@ -85,7 +87,7 @@ class WeatherCell: UICollectionViewCell {
     contentView.addSubview(highLabel)
     highLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-    highLabel.topAnchor.constraint(equalTo: contentView.topAnchor),
+    highLabel.topAnchor.constraint(equalTo: iconImage.bottomAnchor),
     highLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
     highLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor)])
        }
@@ -93,7 +95,7 @@ class WeatherCell: UICollectionViewCell {
     contentView.addSubview(lowLabel)
     lowLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-    lowLabel.topAnchor.constraint(equalTo: contentView.topAnchor),
+    lowLabel.topAnchor.constraint(equalTo: highLabel.bottomAnchor),
     lowLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
     lowLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
     lowLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)])
