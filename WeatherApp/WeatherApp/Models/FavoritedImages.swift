@@ -7,3 +7,8 @@
 //
 
 import Foundation
+
+struct FavoritedImages: Codable {
+    let image:Data
+
+}
