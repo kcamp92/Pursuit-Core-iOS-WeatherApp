@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct FavoritedPictures: Codable {
+struct CityPictures: Codable {
     let hits: [Hit]
 }
 
