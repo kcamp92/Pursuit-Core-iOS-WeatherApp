@@ -8,43 +8,56 @@
 
 import UIKit
 
+private let cellIdentifier = "FavoritesCell"
+
 class FavoriteWeatherVC: UIViewController {
     
     lazy var favoritesTableView: UITableView = {
-           let tv = UITableView()
-           tv.backgroundColor = .white
-           tv.dataSource = self
-           tv.delegate = self
-           return tv
-       }()
-
-    private var favoritesPic = [FavoritedPictures]() {
-         didSet {
-             favoritesTableView.reloadData()
-         }
-     }
+        let tv = UITableView()
+        tv.backgroundColor = .white
+        tv.register(FavoritesCell.self, forCellReuseIdentifier: cellIdentifier)
+        tv.dataSource = self
+        tv.delegate = self
+        return tv
+    }()
+    
+    private var favoritesPic = [FavoritedImages]() {
+        didSet {
+            favoritesTableView.reloadData()
+        }
+    }
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .white
         loadData()
-        setupView()
-
+        setupConstraints()
+        
     }
     
     func loadData(){
         do {favoritesPic = try ImagePersistenceManager.manager.getImage()
             favoritesTableView.reloadData()
         } catch let error {
-            print(error)
+            print("\(error)")
         }
     }
-  func setupView() {
-         favoritesTableView.dataSource = self
-         favoritesTableView.delegate = self
-     }
-
+    
+    
+    func setupConstraints(){
+        view.addSubview(favoritesTableView)
+        favoritesTableView.translatesAutoresizingMaskIntoConstraints = false
+        
+        favoritesTableView.topAnchor.constraint(equalTo: self.view.topAnchor).isActive = true
+        favoritesTableView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
+        favoritesTableView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
+        favoritesTableView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
+        
+    }
+    
 }
+
 
 extension FavoriteWeatherVC: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -54,24 +67,12 @@ extension FavoriteWeatherVC: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let favorites = favoritesPic[indexPath.row]
         let cell = favoritesTableView.dequeueReusableCell(withIdentifier: "FavoritesCell") as! FavoritesCell
-//        if let image = favorites.hits {
-//            ImageHelper.shared.getImage(urlStr: image) {
-//                (result) in
-//                DispatchQueue.main.async {
-//                    switch (result) {
-//                    case .success(let picture):
-//                        cell.favoritesCityImage.image = picture
-//                    case .failure(let error):
-//                        print (error)
-//                    }
-//                }
-//            }
-//        }
+        cell.favoritesCityImage.image = UIImage(data: favorites.image)
         return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-          return 280
-      }
+        return 250
+    }
     
 }
